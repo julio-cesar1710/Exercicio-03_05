@@ -1,0 +1,202 @@
+<?php
+function verificar_par_impar($numero) {
+    if ($numero % 2 == 0) {
+        return "O número é par.";
+    } else {
+        return "O número é ímpar.";
+
+    }
+}
+
+function calcular_soma_array($array) {
+    $soma = array_sum($array);
+    return $soma;
+}
+
+function verificar_palindromo($string) {
+    $string_invertida = strrev($string);
+    if ($string == $string_invertida) {
+        return "A string é um palíndromo.";
+    } else {
+        return "A string não é um palíndromo.";
+    }
+}
+
+function contar_vogais($string) {
+    $vogais = ['a', 'e', 'i', 'o', 'u'];
+    $contador = 0;
+    foreach ($vogais as $vogal) {
+        $contador += substr_count(strtolower($string), $vogal);
+    }
+    return $contador;
+}
+
+function gerar_numeros_primos($n) {
+    $numeros_primos = [];
+    $numero = 2;
+    while (count($numeros_primos) < $n) {
+        $divisores = 0;
+        for ($i = 1; $i <= $numero; $i++) {
+            if ($numero % $i == 0) {
+                $divisores++;
+            }
+        }
+        if ($divisores == 2) {
+            $numeros_primos[] = $numero;
+        }
+        $numero++;
+    }
+    return $numeros_primos;
+}
+
+function calcular_fatorial($numero) {
+    if ($numero == 0) {
+        return 1;
+    } else {
+        return $numero * calcular_fatorial($numero - 1);
+    }
+}
+
+function calcular_fibonacci($n) {
+    $fibonacci = [0, 1];
+    for ($i = 2; $i < $n; $i++) {
+        $fibonacci[$i] = $fibonacci[$i - 1] + $fibonacci[$i - 2];
+    }
+    return $fibonacci;
+}
+
+function inverter_string($string) {
+    return strrev($string);
+}
+
+function calcular_max_min_array($array) {
+    $maximo = max($array);
+    $minimo = min($array);
+    return "Máximo: " . $maximo . ", Mínimo: " . $minimo;
+}
+
+function contar_ocorrencias_array($array) {
+    $ocorrencias = array_count_values($array);
+    return $ocorrencias;
+}
+
+function exibir_menu() {
+    system('clear'); 
+    
+    $menu = "
+    
+    ╔═══════════════════════════════════════════╗
+    ║                   Menu                    ║
+    ╠═══════════════════════════════════════════╣
+    ║ [1] Verificar se um número é par ou ímpar ║
+    ║                                           ║
+    ║ [2] Calcular a soma dos elementos de um   ║
+    ║     array                                 ║
+    ║                                           ║
+    ║ [3] Verificar se uma string é um          ║
+    ║     palíndromo                            ║    
+    ║                                           ║
+    ║ [4] Contar o número de vogais de uma      ║
+    ║     string                                ║
+    ║                                           ║
+    ║ [5] Gerar os primeiros 'N' números primos ║
+    ║                                           ║
+    ║ [6] Calcular o fatorial de um número      ║
+    ║                                           ║
+    ║ [7] Calcular a sequência de Fibonacci     ║
+    ║     até o N-ésimo termo                   ║
+    ║                                           ║
+    ║ [8] Inverter uma string                   ║
+    ║                                           ║
+    ║ [9] Calcular o máximo e o mínimo de um    ║
+    ║     array                                 ║
+    ║                                           ║
+    ║[10] Contar a ocorrência de cada elemento  ║
+    ║     em um array                           ║
+    ║                                           ║
+    ║ [0] SAIR                                  ║
+    ╚═══════════════════════════════════════════╝
+    
+    Escolha uma opção: ";
+    
+    return $menu;
+}
+
+while (true) {
+    echo exibir_menu();
+    $opcao = readline();
+    executar_operacao($opcao);
+
+    echo "Pressione Enter para continuar...";
+    readline(); 
+}
+
+
+function executar_operacao($opcao) {
+    switch ($opcao) {
+        case 1:
+            $numero = readline("Digite um número: ");
+            echo verificar_par_impar($numero) . "\n";
+            break;
+        case 2:
+            $array = readline("Digite os elementos do array separados por espaço: ");
+            $array = explode(" ", $array);
+            $array = array_map('intval', $array);
+            echo calcular_soma_array($array) . "\n";
+            break;
+        case 3:
+            $string = readline("Digite uma string: ");
+            echo verificar_palindromo($string) . "\n";
+            break;
+        case 4:
+            $string = readline("Digite uma string: ");
+            echo contar_vogais($string) . "\n";
+            break;
+        case 5:
+            $n = readline("Digite o valor de N: ");
+            $numeros_primos = gerar_numeros_primos($n);
+            echo implode(", ", $numeros_primos) . "\n";
+            break;
+        case 6:
+            $numero = readline("Digite um número: ");
+            echo calcular_fatorial($numero) . "\n";
+            break;
+        case 7:
+            $n = readline("Digite o valor de N: ");
+            $fibonacci = calcular_fibonacci($n);
+            echo implode(", ", $fibonacci) . "\n";
+            break;
+        case 8:
+            $string = readline("Digite uma string: ");
+            echo inverter_string($string) . "\n";
+            break;
+        case 9:
+            $array = readline("Digite os elementos do array separados por espaço: ");
+            $array = explode(" ", $array);
+            $array = array_map('intval', $array);
+            echo calcular_max_min_array($array) . "\n";
+            break;
+        case 10:
+            $array = readline("Digite os elementos do array separados por espaço: ");
+            $array = explode(" ", $array);
+            $array = array_map('intval', $array);
+            $ocorrencias = contar_ocorrencias_array($array);
+            print_r($ocorrencias);
+            break;
+        case 0:
+            echo "Saindo...\n";
+            exit;
+        default:
+            echo "Opção inválida.\n";
+            break;
+    }
+}
+
+while (true) {
+    echo exibir_menu();
+    $opcao = readline();
+    executar_operacao($opcao);
+
+    echo "Pressione Enter para continuar...";
+    readline(); 
+}
